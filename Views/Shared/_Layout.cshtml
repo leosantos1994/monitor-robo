@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html>
+@*<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Simulador de Votos</title>
+
+    </head>*@
+<head>
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Simulador</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+        ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/img/favicon.ico">
+    <!-- Google Fonts
+        ============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <!-- nalika Icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/nalika-icon.css">
+    <!-- owl.carousel CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Content/css/owl.theme.css">
+    <link rel="stylesheet" href="~/Content/css/owl.transitions.css">
+    <!-- animate CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/animate.css">
+    <!-- normalize CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/normalize.css">
+    <!-- meanmenu icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/meanmenu.min.css">
+    <!-- main CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/main.css">
+    <!-- morrisjs CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/morrisjs/morris.css">
+    <!-- mCustomScrollbar CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/scrollbar/jquery.mCustomScrollbar.min.css">
+    <!-- metisMenu CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="~/Content/css/metisMenu/metisMenu-vertical.css">
+    <!-- calendar CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/calendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="~/Content/css/calendar/fullcalendar.print.min.css">
+    <!-- style CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/style.css">
+    <!-- responsive CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Content/css/responsive.css">
+    <!-- modernizr JS
+        ============================================ -->
+    <script src="~/Content/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Simulador de Votos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Configuracao", "Index", "Configuracao")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="left-sidebar-pro">
+        <nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <a href="index.html"><img class="main-logo" src="~/Content/img/logo/logo.png" alt="" /></a>
+                <strong><img src="~/Content/img/logo/logosn.png" alt="" /></strong>
+            </div>
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        <li class="active">
+                            <a class="has-arrow" href="index.html">
+                                <i class="icon nalika-home icon-wrap"></i>
+                                <span class="mini-click-non">Conteúdo</span>
+                            </a>
+                            <ul class="submenu-angle" aria-expanded="true">
+                                <li>@Html.ActionLink("Home", "Index", "Home")<span class="mini-sub-pro"></span></li>
+                                <li>@Html.ActionLink("Configuracao", "Index", "Configuracao")<span class="mini-sub-pro"></span></li>
+                                @*<li><a title="Dashboard v.1" href="index.html"><span class="mini-sub-pro">Dashboard v.1</span></a></li>*@
+                                @*<li><a title="Dashboard v.2" href="index-1.html"><span class="mini-sub-pro">Dashboard v.2</span></a></li>
+                                <li><a title="Dashboard v.3" href="index-2.html"><span class="mini-sub-pro">Dashboard v.3</span></a></li>
+                                <li><a title="Product List" href="product-list.html"><span class="mini-sub-pro">Product List</span></a></li>
+                                <li><a title="Product Edit" href="product-edit.html"><span class="mini-sub-pro">Product Edit</span></a></li>*@
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+    <div class="all-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="logo-pro">
+                        <a href="index.html"><img class="main-logo" src="~/Content/img/logo/logo.png" alt="" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu start -->
+        <div class="mobile-menu-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="mobile-menu">
+                            <nav id="dropdown">
+                                <ul class="mobile-menu-nav">
+                                    <li>
+                                        <a data-toggle="collapse" data-target="#Charts" href="#">Home <span class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
+                                        <ul class="collapse dropdown-header-top">
+                                            @*<li><a href="index.html">Dashboard v.1</a></li>*@
+                                            @*<li><a href="index-1.html">Dashboard v.2</a></li>
+                                            <li><a href="index-3.html">Dashboard v.3</a></li>
+                                            <li><a href="product-list.html">Product List</a></li>
+                                            <li><a href="product-edit.html">Product Edit</a></li>*@
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu end -->
+        <div class="header-advance-area space">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-top-wraper">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
+                                        <div class="menu-switcher-pro">
+                                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                                                <i class="icon nalika-menu-task"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
+                                        <div class="header-top-menu tabl-d-n">
+                                            <div class="breadcome-heading"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+        <div class="footer-copyright-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer-copy-right">
+                            <p>Copyright © 2018 <a href="https://colorlib.com/wp/templates/">BREleições</a> All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderSection("scripts", required: false)
+
+    </div> 
+    <!-- jquery
+    ============================================ -->
+    <script src="~/Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <!-- bootstrap JS
+        ============================================ -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <!-- wow JS
+        ============================================ -->
+    <script src="~/Content/js/wow.min.js"></script>
+    <!-- price-slider JS
+        ============================================ -->
+    <script src="~/Content/js/jquery-price-slider.js"></script>
+    <!-- meanmenu JS
+        ============================================ -->
+    <script src="~/Content/js/jquery.meanmenu.js"></script>
+    <!-- owl.carousel JS
+        ============================================ -->
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <!-- sticky JS
+        ============================================ -->
+    <script src="~/Content/js/jquery.sticky.js"></script>
+    <!-- scrollUp JS
+        ============================================ -->
+    <script src="~/Content/js/jquery.scrollUp.min.js"></script>
+    <!-- mCustomScrollbar JS
+        ============================================ -->
+    <script src="~/Content/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/js/scrollbar/mCustomScrollbar-active.js"></script>
+    <!-- metisMenu JS
+        ============================================ -->
+    <script src="~/Content/js/metisMenu/metisMenu.min.js"></script>
+    <script src="~/Content/js/metisMenu/metisMenu-active.js"></script>
+    <!-- sparkline JS
+        ============================================ -->
+    <script src="~/Content/js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/Content/js/sparkline/sparkline-active.js"></script>
+    <!-- Chart JS
+        ============================================ -->
+    <script src="~/Content/js/chart/jquery.peity.min.js"></script>
+    <script src="~/Content/js/chart/peity-active.js"></script>
+    <!-- calendar JS
+        ============================================ -->
+    <script src="~/Content/js/calendar/moment.min.js"></script>
+    <script src="~/Content/js/calendar/fullcalendar.min.js"></script>
+    <script src="~/Content/js/calendar/fullcalendar-active.js"></script>
+    <!-- tab JS
+        ============================================ -->
+    <script src="~/Content/js/tab.js"></script>
+    <!-- plugins JS
+        ============================================ -->
+    <script src="~/Content/js/plugins.js"></script>
+    <!-- main JS
+        ============================================ -->
+    <script src="~/Content/js/main.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+</body>
+</html>

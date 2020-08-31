@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SimuladorVotosDBModelStoreContainer" CdmEntityContainer="SimuladorVotosEntities">
+    <EntitySetMapping Name="Configuracao">
+      <EntityTypeMapping TypeName="SimuladorVotosDBModel.Configuracao">
+        <MappingFragment StoreEntitySet="Configuracao">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CriadoEm" ColumnName="CriadoEm" />
+          <ScalarProperty Name="Navegadores" ColumnName="Navegadores" />
+          <ScalarProperty Name="VotosPorNavegador" ColumnName="VotosPorNavegador" />
+          <ScalarProperty Name="SenhaPadrao" ColumnName="SenhaPadrao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Servidores">
+      <EntityTypeMapping TypeName="SimuladorVotosDBModel.Servidor">
+        <MappingFragment StoreEntitySet="Servidores">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CriadoEm" ColumnName="CriadoEm" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

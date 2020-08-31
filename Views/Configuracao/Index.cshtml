@@ -1,0 +1,233 @@
+﻿<!doctype html>
+<html class="no-js" lang="pt-br">
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <div class="breadcome-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="breadcome-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="icon nalika-settings"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Configuração</h2>
+                                        <p>Configure o painel principal e os nós<span class="bread-ntd"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="breadcome-list">
+            <div class="row">
+                <div class="single-product-pr">
+                    <div class="col-lg-12">
+                        <form id="formConfiguration">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Informe a Quantidade de Navegadores" required="" min="1" name="cfgQtdNavegador" id="cfgQtdNavegador" class="form-control">
+                                        <span class="help-block small">Navegadores que irão executar os votos</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Informe a Quantidade de Votos" required="" min="1" name="cfgQtdVotosNavegador" id="cfgQtdVotosNavegador" class="form-control">
+                                        <span class="help-block small">Quantidade de votos que cada navegador ira executar</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Informe a Senha" required="" value="" name="cfgSenhaPadrao" id="cfgSenhaPadrao" class="form-control">
+                                        <span class="help-block small">Senha padrão dos usuários</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" required="" value="" readonly="readonly" name="ultAlteracao" id="ultAlteracao" class="form-control">
+                                        <span class="help-block small">Última alteração</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                    <a class="btn btn-default btn-block btn-primary" onclick="$.post('/Configuracao/SaveEditConfig', $('#formConfiguration').serialize(), () => { clearModal(); loadTable();})">Salvar Ajustes</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* CRIA EDITA *@
+    <div id="PrimaryModalblbgpro" class="modal modal-adminpro-general default-popup-PrimaryModal PrimaryModal-bgcolor fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="modal-header">
+                    <h3>Adicione ou Edite os Servidores</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="formModal">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Informe o Nome" required="" value="" name="listNome" id="listNome" class="form-control">
+                                        <span class="help-block small">Nome do servidor</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="URL" required="" value="" name="listUrl" id="listUrl" class="form-control">
+                                        <span class="help-block small">URL do servidor</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 col-xs-12">
+                            <button class="btn btn-default btn-block btn-primary" id="btnModal" onclick="addServer()">Salvar Ajustes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-status mg-b-30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap">
+                        <h4>Servidores</h4>
+                        <div class="add-product">
+                            <a data-toggle="modal" data-target="#PrimaryModalblbgpro">Adicionar Servidor</a>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>URL</th>
+                                    <th>Adicionado em</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/View JS/Configuracao.js"></script>
+    <script>
+        //loadCfg()
+        //function loadTable() {
+        //    $.ajax({
+        //        url: "/Configuracao/GetAllServer",
+        //        type: "GET",
+        //        success: (data) => {
+        //            $('table tbody').detach();
+        //            $('table').append($('<tbody>'));
+        //            $.each(data, (i, obj) => {
+        //                var markup =
+        //                    `<tr><td>${obj.Nome}</td>` +
+        //                    `<td>${obj.URL}</td>` +
+        //                    `<td>${moment(obj.CriadoEm).format('DD/MM/YYYY')}</td>` +
+        //                    `<td><button class="pd-setting"></button></td>` +
+        //                    `<td><button data-toggle="tooltip" title="Edit" class="pd-setting-ed" data-regID="${obj.ID}" onclick="get(this)">` +
+        //                    "<i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>" +
+        //                    `<button data-toggle="tooltip" title="Trash" class="pd-setting-ed" data-regID="${obj.ID}"` +
+        //                    `onclick="$.post('/Configuracao/Delete/${obj.ID}', loadTable())">` +
+        //                    "<i class='fa fa-trash-o' aria-hidden='true'></i></button></td></tr>";
+
+        //                $("table tbody").append(markup);
+        //            });
+        //        }
+        //    });
+        //}
+        //function addServer() {
+        //    $.ajax({
+        //        url: '/Configuracao/SaveEditServer/0',
+        //        type: 'post',
+        //        data: $('form').serialize(),
+        //        success: () => {
+        //            clearModal();
+        //            loadTable();
+        //            alert('Registro salvo com sucesso');
+        //        }
+        //    });
+        //}
+        //function loadCfg() {
+        //    $.ajax({
+        //        url: "/Configuracao/GetConfig",
+        //        type: "GET",
+        //        success: (data) => {
+        //            $('#cfgQtdNavegador').val(data.Navegadores)
+        //            $('#cfgQtdVotosNavegador').val(data.VotosPorNavegador)
+        //            $('#cfgSenhaPadrao').val(data.SenhaPadrao)
+        //        }
+        //    });
+        //    loadTable()
+        //}
+
+        //function clearModal() {
+        //    $('#listNome').val('')
+        //    $('#listUrl').val('')
+        //    $("#PrimaryModalblbgpro").modal('hide');
+        //}
+
+        //function get(a) {
+        //    if (a.getAttribute("data-regId")) {
+        //        $.ajax({
+        //            url: `Configuracao/GetServer/${a.getAttribute("data-regId")}`,
+        //            type: "GET",
+        //            success: (data) => {
+        //                $('#listNome').val(data.Nome)
+        //                $('#listUrl').val(data.URL)
+        //                document.getElementById("btnModal").onclick = function () { edit(a); };
+        //                $("#PrimaryModalblbgpro").modal('show');
+        //            }
+        //        });
+        //    }
+        //    else {
+        //        document.getElementById("btnModal").onclick = function () { addServer(); };
+        //    }
+        //}
+
+        //function edit(a) {
+        //    if (!$('#listNome').val() || !$('#listUrl').val())
+        //        alert("Os campos são obrigatórios.")
+        //    else {
+        //        $.ajax({
+        //            url: `Configuracao/SaveEditServer/${a.getAttribute("data-regId")}`,
+        //            type: "post",
+        //            data: $('#formModal').serialize(),
+        //            success: (data) => {
+        //                clearModal()
+        //                loadTable()
+        //                alert("Registro alterado com sucesso.")
+        //            }
+        //        });
+        //    }
+        //}
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SimuladorVotosDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Configuracao">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CriadoEm" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="Navegadores" Type="int" Nullable="false" />
+    <Property Name="VotosPorNavegador" Type="int" Nullable="false" />
+    <Property Name="SenhaPadrao" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Servidores">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CriadoEm" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="URL" Type="varchar(max)" />
+  </EntityType>
+  <EntityContainer Name="SimuladorVotosDBModelStoreContainer">
+    <EntitySet Name="Configuracao" EntityType="Self.Configuracao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Servidores" EntityType="Self.Servidores" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

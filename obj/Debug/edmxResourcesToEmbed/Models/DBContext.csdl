@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SimuladorVotosDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Configuracao">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CriadoEm" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="Navegadores" Type="Int32" Nullable="false" />
+    <Property Name="VotosPorNavegador" Type="Int32" Nullable="false" />
+    <Property Name="SenhaPadrao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Servidor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CriadoEm" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="SimuladorVotosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Configuracao" EntityType="Self.Configuracao" />
+    <EntitySet Name="Servidores" EntityType="SimuladorVotosDBModel.Servidor" />
+  </EntityContainer>
+</Schema>
