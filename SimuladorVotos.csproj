@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -55,6 +57,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -63,6 +68,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -128,40 +139,30 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\ConfiguracaoBLL.cs" />
+    <Compile Include="BLL\PerguntaBLL.cs" />
+    <Compile Include="BLL\RoboBLL.cs" />
+    <Compile Include="BLL\VotanteBLL.cs" />
     <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PerguntaController.cs" />
+    <Compile Include="Controllers\StartController.cs" />
+    <Compile Include="Controllers\VotanteController.cs" />
+    <Compile Include="EF\GerenciadorContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Configuracao.cs">
-      <DependentUpon>SimuladorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Servidores.cs">
-      <DependentUpon>SimuladorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SimuladorModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimuladorModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SimuladorModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimuladorModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SimuladorModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimuladorModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Helper\Helpers.cs" />
+    <Compile Include="Models\ConfiguracaoInicialRobo.cs" />
+    <Compile Include="Models\Parametro.cs" />
+    <Compile Include="Models\PerguntaResposta.cs" />
+    <Compile Include="Models\Robo.cs" />
+    <Compile Include="Models\Votante.cs" />
+    <Compile Include="Models\VotanteExportar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\localTeste1.mdf" />
-    <Content Include="App_Data\localTeste1_log.ldf">
-      <DependentUpon>localTeste1.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -180,6 +181,7 @@
     <Content Include="Content\css\code-editor\codemirror.css" />
     <Content Include="Content\css\colorpicker\colorpicker.css" />
     <Content Include="Content\css\cropper\cropper.min.css" />
+    <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\data-table\bootstrap-editable.css" />
     <Content Include="Content\css\data-table\bootstrap-table.css" />
     <Content Include="Content\css\datapicker\colorpicker.css" />
@@ -325,6 +327,7 @@
     <Content Include="Content\js\jquery.sticky.js" />
     <Content Include="Content\js\knob\jquery.knob.js" />
     <Content Include="Content\js\knob\knob-active.js" />
+    <Content Include="Content\js\loading-spinner.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\metisMenu\metisMenu-active.js" />
     <Content Include="Content\js\metisMenu\metisMenu.min.js" />
@@ -370,16 +373,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\SimuladorModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SimuladorModel.edmx</DependentUpon>
-      <LastGenOutput>SimuladorModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SimuladorModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SimuladorModel.edmx</DependentUpon>
-      <LastGenOutput>SimuladorModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\css\summernote\fonts\summernote.eot" />
@@ -404,13 +397,7 @@
     <Content Include="Content\img\notification\Thumbs.db" />
     <Content Include="Content\img\product\Thumbs.db" />
     <Content Include="Content\img\Thumbs.db" />
-    <EntityDeploy Include="Models\SimuladorModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SimuladorModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SimuladorModel.edmx.diagram">
-      <DependentUpon>SimuladorModel.edmx</DependentUpon>
-    </Content>
+    <Content Include=".editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\View JS\Configuracao.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -423,6 +410,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\View JS\Pergunta.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -437,8 +425,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Configuracao\Index.cshtml" />
+    <Content Include="Views\Votante\Index.cshtml" />
+    <Content Include="Views\Pergunta\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html class="no-js" lang="pt-br">
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="~/Content/js/loading-spinner.js"></script>
+    <div class="breadcome-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="breadcome-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="icon nalika-user"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Importação de Votantes</h2>
+                                        <p>Importe os votantes<span class="bread-ntd"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="breadcome-list">
+            <div class="row">
+                <div class="single-product-pr">
+                    <div class="col-lg-12">
+                        <h4 style="color:white">Importação de votantes</h4>
+                        @using (Html.BeginForm("Index", "Votante", FormMethod.Post, new { enctype = "multipart/form-data"}))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-4 col-xs-12 col-sm-offset-3">
+                                    <div class="form-group">
+                                        <input type="file" placeholder="Arquivo csv contendo votantes" required="" min="1" name="flVotantes" id="flVotantes" class="form-control">
+                                        <span class="help-block small">Votantes para serem importados, arquivo .csv com os campos, Nome, Cpf, Regional, Nome da Mãe, Data de Nascimento </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                    <input type="submit" onclick="return spin();" id="btnImportar" class="btn btn-default btn-block btn-primary">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function spin() { Spinner(); Spinner.show(); }</script>
+    <script src="~/Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <link href="~/Content/css/custom.css" rel="stylesheet" />
+</body>
+</html>

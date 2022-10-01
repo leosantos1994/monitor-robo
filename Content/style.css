@@ -24,7 +24,9 @@
     --bg-and-hover: #dedede; /*#0a1312;*/
     --field-bg-color: #4b6cb7;
 }
-
+.bk-active {
+    background: #118217 !important;
+}
 html, body {
     height: 100%;
     font-family: 'Roboto', sans-serif;

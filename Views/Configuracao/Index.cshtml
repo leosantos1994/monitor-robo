@@ -2,6 +2,7 @@
 <html class="no-js" lang="pt-br">
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="~/Content/js/loading-spinner.js"></script>
     <div class="breadcome-area">
         <div class="container-fluid">
             <div class="row">
@@ -15,7 +16,7 @@
                                     </div>
                                     <div class="breadcomb-ctn">
                                         <h2>Configuração</h2>
-                                        <p>Configure o painel principal e os nós<span class="bread-ntd"></span></p>
+                                        <p>Configure o painel principal e os robôs<span class="bread-ntd"></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -30,38 +31,73 @@
             <div class="row">
                 <div class="single-product-pr">
                     <div class="col-lg-12">
+                        <h4 style="color:white">Configurações de Robôs</h4>
                         <form id="formConfiguration">
                             <div class="row">
                                 <div class="col-md-6 col-sm-4 col-xs-12">
                                     <div class="form-group">
-                                        <input type="number" placeholder="Informe a Quantidade de Navegadores" required="" min="1" name="cfgQtdNavegador" id="cfgQtdNavegador" class="form-control">
-                                        <span class="help-block small">Navegadores que irão executar os votos</span>
+                                        <input type="number" required="" disabled="disabled" value="0" name="nmVotantes" id="nmVotantes" class="form-control">
+                                        <span class="help-block small">Quantidade de votantes importada</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-4 col-xs-12">
                                     <div class="form-group">
-                                        <input type="number" placeholder="Informe a Quantidade de Votos" required="" min="1" name="cfgQtdVotosNavegador" id="cfgQtdVotosNavegador" class="form-control">
-                                        <span class="help-block small">Quantidade de votos que cada navegador ira executar</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-4 col-xs-12">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Informe a Senha" required="" value="" name="cfgSenhaPadrao" id="cfgSenhaPadrao" class="form-control">
-                                        <span class="help-block small">Senha padrão dos usuários</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-4 col-xs-12">
-                                    <div class="form-group">
-                                        <input type="text" required="" value="" readonly="readonly" name="ultAlteracao" id="ultAlteracao" class="form-control">
+                                        <input type="text" required="" value="" disabled="disabled" name="ultAlteracao" id="ultAlteracao" class="form-control">
                                         <span class="help-block small">Última alteração</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" required="" disabled="disabled" value="0" name="nmOnLine" id="nmOnLine" class="form-control">
+                                        <span class="help-block small">Votantes de robôs online</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Informe a Quantidade Padrão de Navegadores" required="" min="1" name="cfgQtdNavegador" id="cfgQtdNavegador" class="form-control">
+                                        <span class="help-block small">Quantidade de navegadores executando votos</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Informe a Senha Padrão" required value="" name="cfgSenhaPadrao" id="cfgSenhaPadrao" class="form-control">
+                                        <span class="help-block small">*Senha padrão dos usuários</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Informe a Senha para Troca" required value="" name="cfgSenhaTroca" id="cfgSenhaTroca" class="form-control">
+                                        <span class="help-block small">*Senha que será definida após a troca</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Informe a URL do site de votação" required value="" name="cfgUrl" id="cfgUrl" class="form-control">
+                                        <span class="help-block small">*URL Onde será feita a votação</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" min="1" placeholder="Informe a quantidade de Chapas" required="required" value="" name="cfgNumChapas" id="cfgNumChapas" class="form-control">
+                                        <span class="help-block small">*Número de chapas da votação, Ex: de 1 a 5, o valor é 5</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" min="1" placeholder="Informe a quantidade de Votações" required="required" value="" name="cfgNumVotacoes" id="cfgNumVotacoes" class="form-control">
+                                        <span class="help-block small">*Número de votações da eleição</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="checkbox" placeholder="Distribuição Automática" name="ckDistribuicaoAutomatica" id="ckDistribuicaoAutomatica" class="form-control" onclick="checkInput(this)">
+                                        <span class="help-block small">Distribui os votantes automaticamente entre os robôs e ignora as configurações dos robôs, caso contrário irá distribuir pelas regionais informadas nos robôs</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                    <a class="btn btn-default btn-block btn-primary" onclick="$.post('/Configuracao/SaveEditConfig', $('#formConfiguration').serialize(), () => { clearModal(); loadTable();})">Salvar Ajustes</a>
+                                    <a id="btnSalvarConfiguracao" class="btn btn-default btn-block btn-primary" onclick="gravarConfiguracao()">Salvar Ajustes</a>
                                 </div>
                             </div>
                         </form>
@@ -70,15 +106,43 @@
             </div>
         </div>
     </div>
-    @* CRIA EDITA *@
+
+    <div id="divIniciar" class="container-fluid">
+        <div class="breadcome-list">
+            <div class="row">
+                <div class="single-product-pr">
+                    <div class="col-lg-12">
+                        <h4 style="color:white">Iniciar Robô</h4>
+                        <form id="formStart">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-4 col-xs-12 col-sm-offset-3">
+                                    <div class="form-group">
+                                        <input type="password" placeholder="Informe a senha padrão" required="" min="1" name="cfgStartPassword" id="cfgStartPassword" class="form-control">
+                                        <span class="help-block small">Senha definida como padrão dos votantes, esta ação                       desabilita as configurações</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                    <a class="btn btn-default btn-block btn-primary" onclick="iniciar()">Iniciar Robôs</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* CRIA EDITA Robô*@
     <div id="PrimaryModalblbgpro" class="modal modal-adminpro-general default-popup-PrimaryModal PrimaryModal-bgcolor fade" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content text-center">
+            <div class="modal-content text-center" style="background: var(--main-bg-color);">
                 <div class="modal-close-area modal-close-df">
                     <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
                 </div>
                 <div class="modal-header">
-                    <h3>Adicione ou Edite os Servidores</h3>
+                    <h3>Adicione ou Edite os Robôs</h3>
                 </div>
                 <div class="modal-body">
                     <form id="formModal">
@@ -86,14 +150,50 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-4 col-xs-12">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Informe o Nome" required="" value="" name="listNome" id="listNome" class="form-control">
-                                        <span class="help-block small">Nome do servidor</span>
+                                        <input type="text" placeholder="Informe o Nome" required="" value="" name="txtNome" id="txtNome" class="form-control">
+                                        <span class="help-block small">Nome do Robô</span>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-4 col-xs-12">
                                     <div class="form-group">
-                                        <input type="text" placeholder="URL" required="" value="" name="listUrl" id="listUrl" class="form-control">
-                                        <span class="help-block small">URL do servidor</span>
+                                        <input type="number" placeholder="Quantidade de navegadores" min="" required="" name="nmQtdNavegadores" id="nmQtdNavegadores" class="form-control">
+                                        <span class="help-block small">Quantidade de navegadores executando votos, caso informado irá ignorar a quantidade padrão</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Votos em branco" min="0" required="" value="" name="nmQtdBranco" id="nmQtdBranco" class="form-control">
+                                        <span class="help-block small">Quantidade de votantes em branco</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Votos nulos" min="0" required="" value="" name="nmQtdNulo" id="nmQtdNulo" class="form-control">
+                                        <span class="help-block small">Quantidade de votantes em nulo</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Votos em chapa" min="0" required="" value="" name="nmQtdVoto" id="nmQtdVoto" class="form-control">
+                                        <span class="help-block small">Quantidade de votantes em chapas</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Chapa" min="0" required="" value="" name="nmChapaVotar" id="nmChapaVotar" class="form-control">
+                                        <span class="help-block small">Chapa para ser votada</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="number" placeholder="Eleição" min="0" required="" value="" name="nmRegional" id="nmRegional" class="form-control">
+                                        <span class="help-block small">Eleição onde o robô irá votar</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-4 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="UF" min="0" required="" max="2" maxlength="2" name="txtUF" id="txtUF" class="form-control">
+                                        <span class="help-block small">UF regional onde o robô irá votar</span>
                                     </div>
                                 </div>
                             </div>
@@ -103,32 +203,41 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 col-xs-12">
-                            <button class="btn btn-default btn-block btn-primary" id="btnModal" onclick="addServer()">Salvar Ajustes</button>
+                            <button class="btn btn-default btn-block btn-primary" id="btnModal" onclick="addRobo()">Salvar Ajustes</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @* GRID ROBÔ *@
     <div class="product-status mg-b-30">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="product-status-wrap">
-                        <h4>Servidores</h4>
-                        <div class="add-product">
-                            <a data-toggle="modal" data-target="#PrimaryModalblbgpro">Adicionar Servidor</a>
+                        <h4>Robôs</h4>
+                        <div id="btnAddRobo" class="add-product">
+                            <a data-toggle="modal" data-target="#PrimaryModalblbgpro">Adicionar Robô</a>
                         </div>
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Codigo</th>
                                     <th>Nome</th>
-                                    <th>URL</th>
-                                    <th>Adicionado em</th>
+                                    <th>Navegadores</th>
+                                    <th>Qtd Brancos</th>
+                                    <th>Qtd Nulos</th>
+                                    <th>Qtd Votos</th>
+                                    <th>Chapa</th>
+                                    <th>Eleição</th>
+                                    <th>UF</th>
                                     <th>Status</th>
+                                    <th>Atualizado</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -137,97 +246,7 @@
     </div>
     <script src="~/Content/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="~/Scripts/View JS/Configuracao.js"></script>
-    <script>
-        //loadCfg()
-        //function loadTable() {
-        //    $.ajax({
-        //        url: "/Configuracao/GetAllServer",
-        //        type: "GET",
-        //        success: (data) => {
-        //            $('table tbody').detach();
-        //            $('table').append($('<tbody>'));
-        //            $.each(data, (i, obj) => {
-        //                var markup =
-        //                    `<tr><td>${obj.Nome}</td>` +
-        //                    `<td>${obj.URL}</td>` +
-        //                    `<td>${moment(obj.CriadoEm).format('DD/MM/YYYY')}</td>` +
-        //                    `<td><button class="pd-setting"></button></td>` +
-        //                    `<td><button data-toggle="tooltip" title="Edit" class="pd-setting-ed" data-regID="${obj.ID}" onclick="get(this)">` +
-        //                    "<i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>" +
-        //                    `<button data-toggle="tooltip" title="Trash" class="pd-setting-ed" data-regID="${obj.ID}"` +
-        //                    `onclick="$.post('/Configuracao/Delete/${obj.ID}', loadTable())">` +
-        //                    "<i class='fa fa-trash-o' aria-hidden='true'></i></button></td></tr>";
 
-        //                $("table tbody").append(markup);
-        //            });
-        //        }
-        //    });
-        //}
-        //function addServer() {
-        //    $.ajax({
-        //        url: '/Configuracao/SaveEditServer/0',
-        //        type: 'post',
-        //        data: $('form').serialize(),
-        //        success: () => {
-        //            clearModal();
-        //            loadTable();
-        //            alert('Registro salvo com sucesso');
-        //        }
-        //    });
-        //}
-        //function loadCfg() {
-        //    $.ajax({
-        //        url: "/Configuracao/GetConfig",
-        //        type: "GET",
-        //        success: (data) => {
-        //            $('#cfgQtdNavegador').val(data.Navegadores)
-        //            $('#cfgQtdVotosNavegador').val(data.VotosPorNavegador)
-        //            $('#cfgSenhaPadrao').val(data.SenhaPadrao)
-        //        }
-        //    });
-        //    loadTable()
-        //}
-
-        //function clearModal() {
-        //    $('#listNome').val('')
-        //    $('#listUrl').val('')
-        //    $("#PrimaryModalblbgpro").modal('hide');
-        //}
-
-        //function get(a) {
-        //    if (a.getAttribute("data-regId")) {
-        //        $.ajax({
-        //            url: `Configuracao/GetServer/${a.getAttribute("data-regId")}`,
-        //            type: "GET",
-        //            success: (data) => {
-        //                $('#listNome').val(data.Nome)
-        //                $('#listUrl').val(data.URL)
-        //                document.getElementById("btnModal").onclick = function () { edit(a); };
-        //                $("#PrimaryModalblbgpro").modal('show');
-        //            }
-        //        });
-        //    }
-        //    else {
-        //        document.getElementById("btnModal").onclick = function () { addServer(); };
-        //    }
-        //}
-
-        //function edit(a) {
-        //    if (!$('#listNome').val() || !$('#listUrl').val())
-        //        alert("Os campos são obrigatórios.")
-        //    else {
-        //        $.ajax({
-        //            url: `Configuracao/SaveEditServer/${a.getAttribute("data-regId")}`,
-        //            type: "post",
-        //            data: $('#formModal').serialize(),
-        //            success: (data) => {
-        //                clearModal()
-        //                loadTable()
-        //                alert("Registro alterado com sucesso.")
-        //            }
-        //        });
-        //    }
-        //}
-    </script>
+    <link href="~/Content/css/custom.css" rel="stylesheet" />
 </body>
 </html>

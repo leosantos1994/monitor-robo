@@ -1,96 +1,184 @@
 ﻿using SimuladorVotos.BLL;
+using SimuladorVotos.EF;
 using SimuladorVotos.Models;
 using System;
+using System.CodeDom;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace SimuladorVotos.Controllers
 {
     public class ConfiguracaoController : Controller
     {
         JavaScriptResult Script => new JavaScriptResult();
-        ConfiguracaoBLL BLL = new ConfiguracaoBLL();
+        ConfiguracaoBLL BLL => new ConfiguracaoBLL();
+        RoboBLL BLLRobo => new RoboBLL();
+
         public ActionResult Index()
         {
+            Session["FoiIniciado"] = BLL.FoiIniciado();
             return View();
         }
 
         #region Post
         [HttpPost]
-        public JavaScriptResult SaveEditConfig(FormCollection collection)
+        public ActionResult SaveEditConfig(FormCollection collection)
         {
-            int id = BLL.SaveOrEditConfiguration(new Configuracao()
+            try
             {
-                Navegadores = Convert.ToInt32(collection["cfgQtdNavegador"]),
-                SenhaPadrao = collection["cfgQtdVotosNavegador"].ToString(),
-                VotosPorNavegador = Convert.ToInt32(collection["cfgSenhaPadrao"])
-            });
+                if (!ValidarCamposInt(collection))
+                    throw new Exception("Erro ao salvar configuração. Erro durante a conversão. Verifique os campos númericos, informe valores válidos.");
+                int id = BLL.SaveOrEditConfiguration(new Parametro()
+                {
+                    Navegadores = Convert.ToInt32(collection["cfgQtdNavegador"]),
+                    SenhaPadrao = collection["cfgSenhaPadrao"].ToString(),
+                    SenhaTroca = collection["cfgSenhaTroca"].ToString(),
+                    URL = collection["cfgUrl"].ToString(),
+                    NumeroDeChapas = collection["cfgNumChapas"].AsInt(),
+                    NumeroDeVotacoes = collection["cfgNumVotacoes"].AsInt(),
+                    DistribuirAutomaticamente = collection["ckDistribuicaoAutomatica"].AsBool(false),
+                    VotosPorNavegador = collection["ckDitribuicaoAutomatica"].AsInt(0)
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ex.Message });
+            }
+            return Json(new { msg = "Alterações salvas com sucesso." });
+        }
 
-            Script.Script = id > 0 ? "alert('Registro criado com sucesso')" : "alert('Registro alterado com sucesso')";
-            return Script;
+
+
+        [HttpPost]
+        public ActionResult SaveEditRobo(FormCollection collection, int id)
+        {
+            string msg = id <= 0 ? "Registro criado com sucesso." : "Registro alterado com sucesso.";
+            try
+            {
+                if (string.IsNullOrEmpty("txtNome"))
+                    throw new Exception("Campo nome não informado.");
+
+                BLLRobo.SaveOrEdit(new Robo
+                {
+                    Nome = collection["txtNome"],
+                    Chapa = SafeToInt(collection["nmChapaVotar"].ToString()),
+                    QtdVotos = collection["nmQtdVoto"].AsInt(0),
+                    QtdVotosBranco = collection["nmQtdBranco"].AsInt(0),
+                    QtdVotosNulo = collection["nmQtdNulo"].AsInt(0),
+                    Regional = collection["nmRegional"].AsInt(0),
+                    Navegadores = collection["nmQtdNavegadores"].AsInt(0),
+                    UF = collection["txtUF"].ToString(),
+                    ID = id
+                });
+            }
+            catch (Exception ex)
+            {
+                msg = (id > 0 ? "Erro ao editar: " : "Erro ao salvar: ") + ex.Message;
+                return Json(new { msg = msg });
+            }
+            return Json(new { msg = msg });
+
         }
 
         [HttpPost]
-        public JavaScriptResult SaveEditServer(FormCollection collection, int id)
+        public ActionResult Iniciar(FormCollection collection)
         {
-            BLL.SaveOrEditServer(new Servidores
+            string msg = "";
+            bool ok = false;
+            try
             {
-                Nome = collection["listNome"],
-                URL = collection["listUrl"],
-                ID = id
-            });
-            Script.Script = id > 0 ? "alert('Registro criado com sucesso')" : "alert('Registro alterado com sucesso')";
-            return Script;
+                var param = BLL.BuscarParametro();
+                if (param is null)
+                    throw new Exception("Não foram encontrados parâmetros de configuração, impossível iniciar.");
+                else if (param.SenhaPadrao != collection["cfgStartPassword"])
+                    throw new Exception("Senha informada não confere.");
+                else if (new VotanteBLL().Count() <= 0)
+                    throw new Exception("Nenhum votante localizado na base de dados.");
+                else
+                {
+                    param.Iniciado = true;
+                    new RoboBLL().Distribuir();
+                    BLL.SaveOrEditConfiguration(param);
+                    msg = "O sistemas foram inicializados, nenhuma configuração adicional será possível.";
+                    ok = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            return Json(new { msg = msg, ok = ok });
         }
 
         [HttpPost]
-        public JavaScriptResult Delete(int id)
+        public ActionResult DeleteRobo(int id)
         {
-            BLL.Delete(id);
-            Script.Script = JSMethods.TableLoad;
-            return Script;
+            try
+            {
+                BLLRobo.Delete(id);
+                return Json(new { msg = "Robô excluido com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                var error = ex.InnerException?.InnerException?.Message ?? "";
+                    
+                if (error.Contains("REFERENCE"))
+                    return Json(new { msg = "Erro ao tentar excluir robô, existe um votante vinculado ao mesmo." });
+
+                return Json(new { msg = ex.Message });
+            }
         }
         #endregion
 
         #region GET
 
         [HttpGet]
-        public JsonResult GetConfig()
+        public ActionResult GetConfig()
         {
-            using (var ctx = new EFContext())
-            {
-                var result = ctx.Configuracao.FirstOrDefault();
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
+            return Json(BLL.BuscarParametro(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetAllServer()
+        public ActionResult GetAllRobo()
         {
-            using (var ctx = new EFContext())
-            {
-                var list = (from a in ctx.Servidores select a).ToList();
-
-                return Json(list, JsonRequestBehavior.AllowGet);
-            }
+            return Json(new RoboBLL().GetAll(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetServer(int id)
+        public ActionResult GetRobo(int id)
         {
-            using (var ctx = new EFContext())
-            {
-                var result = ctx.Servidores.FirstOrDefault(x => x.ID == id);
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
+            return Json(new RoboBLL().GetById(id), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetCountVotante()
+        {
+            return Json(new { Qtd = new VotanteBLL().Count() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public static int SafeToInt(string s, int _default = 0)
+        {
+            int number;
+            if (int.TryParse(s, out number))
+                return number;
+            return _default;
         }
 
         #endregion
 
+        #region PRIVATE
         private static class JSMethods
         {
             public const string ModalClear = "clearModal();";
             public const string TableLoad = "loadTable();";
         }
+
+        private bool ValidarCamposInt(FormCollection collection)
+        {
+            return
+           (int.TryParse(collection["cfgQtdNavegador"], out int result));
+        }
+        #endregion
     }
 }

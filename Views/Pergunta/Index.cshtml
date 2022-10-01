@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html class="no-js" lang="pt-br">
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <div class="breadcome-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="breadcome-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="icon nalika-user"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Perguntas</h2>
+                                        <p>Perguntas de validação<span class="bread-ntd"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="breadcome-list">
+            <div class="row">
+                <div class="single-product-pr">
+                    <div class="col-lg-12">
+                        <h4 style="color:white">Cadastre as Perguntas</h4>
+                        @using (Html.BeginForm("Index", "Pergunta", FormMethod.Post))
+                        {
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-4 col-xs-12">
+                                        <input type="hidden" id="id" name="id"/>
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Informe a Pergunta" required value="" name="txtPergunta" id="txtPergunta" class="form-control">
+                                            <span class="help-block small">Pergunta</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <select placeholder="Pergunta de validação" required name="slPergunta" id="slPergunta" class="form-control">
+                                                <option value="1">Data de Nascimento</option>
+                                                <option value="2">CPF</option>
+                                                <option value="3">Nome da Mãe</option>
+                                            </select>
+                                            <span class="help-block small">Campo de resposta da pergunta</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                        <button class="btn btn-default btn-block btn-primary" id="btnModal" onclick="addPergunta()">Salvar Ajustes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* GRID PERGUNTA *@
+        <div class="product-status mg-b-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap">
+                            <h4>Perguntas</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Pergunta</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Campo Resposta</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/vendor/jquery-1.12.4.min.js"></script>
+    <link href="~/Content/css/custom.css" rel="stylesheet" />
+    <script src="~/Scripts/View JS/Pergunta.js"></script>
+</body>
+</html>
+

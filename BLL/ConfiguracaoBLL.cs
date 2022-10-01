@@ -1,4 +1,5 @@
-﻿using SimuladorVotos.Models;
+﻿using SimuladorVotos.EF;
+using SimuladorVotos.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,58 +10,65 @@ namespace SimuladorVotos.BLL
 {
     public class ConfiguracaoBLL
     {
-        public int SaveOrEditConfiguration(Configuracao Model)
+        public int SaveOrEditConfiguration(Parametro Model)
         {
-            using (var ctx = new EFContext())
+            //Apenas existirá um parametro ativo durante o ciclo de vida do gestor
+            //está consulta não resulta em performance, pois o framework reserva os dados em memoria
+            //essa consulta não pode estar no mesmo contexto da segunda
+            using (var ctx = new GerenciadorContext())
             {
-                var cfg = ctx.Configuracao.FirstOrDefault()?? new Configuracao();
-                cfg.Navegadores = Model.Navegadores;
-                cfg.SenhaPadrao = Model.SenhaPadrao;
-                cfg.VotosPorNavegador = Model.VotosPorNavegador;
-                if (cfg.ID > 0)
-                {
-                    ctx.Configuracao.Attach(cfg);
-                    ctx.Entry(cfg).State = EntityState.Modified;
-                    
-                }
-                else
-                {
-                    cfg.CriadoEm = DateTime.Now;
-                    ctx.Configuracao.Add(cfg);
-                }
-
-                ctx.SaveChanges();
-                return cfg.ID;
+                Model.ID = ctx.Parametro?.FirstOrDefault()?.ID ?? 0;
             }
-        }
 
-        public int SaveOrEditServer(Servidores Model)
-        {
-            using (var ctx = new EFContext())
+            using (var ctx = new GerenciadorContext())
             {
+                Model.UltimaAlteracao = DateTime.Now;
+
                 if (Model.ID > 0)
                 {
-                    ctx.Servidores.Attach(Model);
+                    ctx.Parametro.Attach(Model);
                     ctx.Entry(Model).State = EntityState.Modified;
                 }
                 else
-                {
-                    Model.CriadoEm = DateTime.Now;
-                    ctx.Servidores.Add(Model);
-                }
+                    ctx.Parametro.Add(Model);
 
                 ctx.SaveChanges();
-                return Model.ID;
+
+                return ctx.Parametro.FirstOrDefault().ID;
             }
         }
 
-        public void Delete(int id)
+        public void AddRemoveVotanteOnline(bool add)
         {
-            using (var ctx = new EFContext())
+            Parametro param = new Parametro();
+            using (var ctx = new GerenciadorContext())
             {
-                var employer = new Servidores { ID = id };
-                ctx.Entry(employer).State = EntityState.Deleted;
+                param = ctx.Parametro?.FirstOrDefault();
+            }
+
+            using (var ctx = new GerenciadorContext())
+            {
+                param.VotantesDoRoboOnline = add ? param.VotantesDoRoboOnline + 1 : param.VotantesDoRoboOnline - 1;
+                ctx.Parametro.Attach(param);
+                ctx.Entry(param).State = EntityState.Modified;
                 ctx.SaveChanges();
+            }
+        }
+
+        public bool FoiIniciado()
+        {
+            using (var ctx = new GerenciadorContext())
+            {
+                var result = ctx.Parametro?.FirstOrDefault();
+                return result is null || !result.Iniciado ? false : true;
+            }
+        }
+
+        public Parametro BuscarParametro()
+        {
+            using (var ctx = new GerenciadorContext())
+            {
+                return ctx.Parametro.FirstOrDefault();
             }
         }
     }
